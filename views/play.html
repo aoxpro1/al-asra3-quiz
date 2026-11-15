@@ -1,0 +1,313 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#030d1b" />
+    <meta name="robots" content="noindex" />
+    <title>اللاعب | الأسرع</title>
+    <link rel="icon" href="/assets/logo.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="/css/base.css" />
+    <link rel="stylesheet" href="/css/play.css" />
+  </head>
+  <body class="play-page">
+    <div class="site-backdrop" aria-hidden="true">
+      <span class="orb orb-cyan"></span>
+      <span class="orb orb-green"></span>
+      <span class="helix helix-left"></span>
+      <span class="helix helix-right"></span>
+      <span class="hex-ghost"><img src="/assets/hex-watermark.svg" alt="" /></span>
+    </div>
+
+    <header class="play-top play-shell">
+      <div class="brand brand-sm">
+        <img src="/assets/logo.svg" alt="" />
+        <span class="brand-copy">
+          <span class="brand-name">الأسرع</span>
+          <span class="brand-sub">العلوم الحيوية الطبية</span>
+        </span>
+      </div>
+      <div class="play-top-meta">
+        <span class="pill code-pill" id="top-code-pill" hidden>
+          <span class="top-code-label">الرمز</span>
+          <b id="top-code-code" dir="ltr">—</b>
+        </span>
+        <span class="conn-pill" id="conn-pill">
+          <span class="online-dot" id="conn-dot"></span>
+          <span id="conn-label">متصل</span>
+        </span>
+      </div>
+    </header>
+
+    <main class="play-shell play-main">
+      <section id="view-loading" class="view loading-view" aria-live="polite">
+        <img class="loading-logo" src="/assets/logo.svg" alt="" />
+        <span class="spinner loading-spinner"></span>
+        <p id="loading-text">جارٍ الاتصال بالجولة...</p>
+      </section>
+
+      <section id="view-join" class="view" hidden>
+        <div class="join-hero">
+          <span class="eyebrow">دخول اللاعبين</span>
+          <h1 class="play-title wordmark">ادخل اللعبة</h1>
+          <p class="play-sub">اكتب اسمك ورمز الجولة للانضمام إلى السباق.</p>
+        </div>
+
+        <div class="card join-panel fade-in">
+          <form id="join-form" class="stack" novalidate>
+            <div class="field">
+              <label for="code-input">رمز اللعبة</label>
+              <input
+                id="code-input"
+                class="input code-input-sm"
+                type="text"
+                inputmode="numeric"
+                autocomplete="one-time-code"
+                maxlength="6"
+                placeholder="000000"
+                dir="ltr"
+                required
+              />
+            </div>
+            <div class="field">
+              <label for="name-input">اسمك</label>
+              <input
+                id="name-input"
+                class="input"
+                type="text"
+                maxlength="18"
+                autocomplete="nickname"
+                placeholder="مثال: أنس"
+                required
+              />
+              <span class="hint">سيظهر هذا الاسم في شاشة العرض ولوحة المتصدرين.</span>
+            </div>
+            <p id="join-error" class="join-error" role="alert" hidden></p>
+            <button id="join-submit" class="btn btn-primary btn-lg btn-block" type="submit">
+              ادخل الغرفة
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M19 12H5M11 18l-6-6 6-6" />
+              </svg>
+            </button>
+          </form>
+          <div class="join-tips">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="9" />
+              <path d="M12 11v6M12 7.5h.01" />
+            </svg>
+            <span>تأكد من مطابقة الاسم والرمز لما يظهر على شاشة العرض. لا حاجة لتثبيت أي تطبيق.</span>
+          </div>
+        </div>
+      </section>
+
+      <section id="view-lobby" class="view" hidden>
+        <div class="lobby-hero">
+          <span class="eyebrow">أنت داخل الغرفة</span>
+          <h1 class="play-title">انتظر بدء الجولة</h1>
+          <p class="play-sub" id="lobby-hint">سيبدأ المشرف الجولة بعد انضمام اللاعبين.</p>
+        </div>
+
+        <div class="card you-card fade-in">
+          <div class="row">
+            <span class="avatar avatar-lg" id="lobby-avatar">؟</span>
+            <div class="grow">
+              <div class="you-label">أنت</div>
+              <div class="you-name" id="lobby-name">—</div>
+            </div>
+            <span class="badge badge-green"><span class="dot"></span> جاهز</span>
+          </div>
+          <div class="you-code-row">
+            <span class="muted text-xs">رمز الجولة</span>
+            <strong class="you-code" id="lobby-code" dir="ltr">—</strong>
+          </div>
+        </div>
+
+        <div class="card players-card">
+          <div class="between players-head">
+            <div>
+              <h2 class="players-title">اللاعبون</h2>
+              <p class="text-xs muted" id="lobby-count">٠ من ٠</p>
+            </div>
+            <div class="capacity-dots" id="capacity-dots" aria-hidden="true"></div>
+          </div>
+          <div class="player-chips" id="lobby-players"></div>
+        </div>
+
+        <div class="wait-note">
+          <span class="pulse-dot"></span>
+          <span>أبقِ الصفحة مفتوحة. ستبدأ الأسئلة تلقائيًا عند بدء المشرف.</span>
+        </div>
+      </section>
+
+      <section id="view-ready" class="view ready-view" hidden>
+        <div class="ready-burst" aria-hidden="true">
+          <img src="/assets/logo.svg" alt="" />
+        </div>
+        <span class="eyebrow">الجولة تبدأ الآن</span>
+        <h1 class="ready-title wordmark">استعد!</h1>
+        <p class="play-sub">السؤال الأول سيظهر بعد لحظات. جهّز إبهامك.</p>
+        <div class="ready-players" id="ready-players"></div>
+        <div class="ready-hint">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+            <path d="M13 2 4.5 13.5H11l-1.6 8.5L20 10h-6.5L13 2Z" />
+          </svg>
+          الأسرع في الإجابة الصحيحة يكسب أكثر
+        </div>
+      </section>
+
+      <section id="view-question" class="view question-view" hidden>
+        <div class="q-topline">
+          <div class="stack-sm">
+            <span class="pill" id="q-counter">السؤال ١ من ١٠</span>
+            <span class="text-xs muted" id="q-status">اختر الإجابة قبل انتهاء الوقت</span>
+          </div>
+          <div class="timer" id="player-timer" style="--timer-size: 66px" aria-label="الوقت المتبقي">
+            <svg viewBox="0 0 120 120" aria-hidden="true">
+              <circle class="timer-track" cx="60" cy="60" r="52"></circle>
+              <circle class="timer-progress" cx="60" cy="60" r="52"></circle>
+            </svg>
+            <span class="timer-inner">
+              <span class="timer-value">٣٠</span>
+              <span class="timer-unit">ثانية</span>
+            </span>
+          </div>
+        </div>
+
+        <div class="card q-card">
+          <span class="badge badge-cyan" id="q-category">الخلية</span>
+          <h1 class="q-text" id="q-text">—</h1>
+        </div>
+
+        <div class="answer-grid" id="answer-grid" role="group" aria-label="خيارات الإجابة"></div>
+
+        <div class="question-state" id="question-state" hidden></div>
+
+        <div class="q-foot">
+          <span id="answered-count">أجاب ٠ من ٠</span>
+          <span class="q-foot-dot">•</span>
+          <span id="players-count">٠ لاعبين</span>
+        </div>
+      </section>
+
+      <section id="view-result" class="view result-view" hidden>
+        <div class="result-hero card" id="result-card">
+          <div class="result-icon" id="result-icon" aria-hidden="true"></div>
+          <h1 class="result-title" id="result-title">إجابة صحيحة!</h1>
+          <div class="result-points" id="result-points">+١٠٠٠</div>
+          <p class="result-sub" id="result-sub"></p>
+        </div>
+
+        <div class="card result-detail">
+          <div class="correct-row" id="correct-answer-row">
+            <span class="text-xs muted">الإجابة الصحيحة</span>
+            <div class="correct-answer">
+              <span class="answer-letter correct-letter" id="correct-letter">ج</span>
+              <strong id="correct-text">—</strong>
+            </div>
+          </div>
+          <p class="explanation" id="explanation" hidden></p>
+          <div class="result-stats">
+            <div class="stat-box">
+              <span class="stat-label">نقاطك</span>
+              <strong class="stat-value green num" id="total-points">٠</strong>
+            </div>
+            <div class="stat-box">
+              <span class="stat-label">ترتيبك</span>
+              <strong class="stat-value num" id="total-rank">—</strong>
+            </div>
+            <div class="stat-box">
+              <span class="stat-label">صحيحة</span>
+              <strong class="stat-value num" id="correct-count">٠</strong>
+            </div>
+          </div>
+        </div>
+
+        <div class="card mini-board">
+          <div class="between">
+            <h2 class="mini-title">المتصدرون</h2>
+            <span class="text-xs muted" id="mini-after">بعد السؤال ١</span>
+          </div>
+          <div id="mini-leaderboard"></div>
+        </div>
+
+        <p class="wait-note">انتظر إعلان المتصدرين أو السؤال التالي من المشرف.</p>
+      </section>
+
+      <section id="view-leaderboard" class="view board-view" hidden>
+        <div class="board-hero">
+          <span class="eyebrow">الترتيب العام</span>
+          <h1 class="play-title">المتصدرون</h1>
+          <p class="play-sub" id="board-sub">بعد السؤال ١ من ١٠</p>
+        </div>
+        <div class="podium-mini" id="leaderboard-podium"></div>
+        <div class="card standings-card">
+          <ol class="standings-list" id="leaderboard-list"></ol>
+        </div>
+        <p class="wait-note">السؤال التالي سيبدأ من قِبل المشرف.</p>
+      </section>
+
+      <section id="view-final" class="view final-view" hidden>
+        <div class="final-hero">
+          <div class="crown-wrap" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="m3 7 4.5 4L12 4l4.5 7L21 7l-2 12H5L3 7Z" /><path d="M5 19h14v2H5z" /></svg>
+          </div>
+          <span class="eyebrow" id="final-eyebrow">الفائز بالجولة</span>
+          <h1 class="final-winner wordmark" id="final-winner">—</h1>
+          <p class="final-score" id="final-score"></p>
+          <p class="play-sub" id="final-sub"></p>
+        </div>
+
+        <div class="card your-final">
+          <div class="row">
+            <span class="avatar avatar-lg" id="final-avatar">؟</span>
+            <div class="grow">
+              <div class="you-label">نتيجتك</div>
+              <div class="you-name" id="final-you-name">—</div>
+            </div>
+            <div class="final-rank">
+              <strong id="final-rank">—</strong>
+              <span class="text-xs muted">الترتيب</span>
+            </div>
+          </div>
+          <div class="final-stats">
+            <div><span class="text-xs muted">النقاط</span><strong class="green num" id="final-points">٠</strong></div>
+            <div><span class="text-xs muted">إجابات صحيحة</span><strong class="num" id="final-correct">٠</strong></div>
+          </div>
+        </div>
+
+        <div class="card standings-card">
+          <h2 class="mini-title">الترتيب النهائي</h2>
+          <ol class="standings-list" id="final-list"></ol>
+        </div>
+        <p class="thanks-note">شكرًا لمشاركتك في تحدّي الأسرع | العلوم الحيوية الطبية</p>
+      </section>
+
+      <section id="view-closed" class="view closed-view" hidden>
+        <div class="closed-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 3 5 6v6c0 4.5 3 7.5 7 9 4-1.5 7-4.5 7-9V6l-7-3Z" />
+            <path d="m9 12 2 2 4-4" />
+          </svg>
+        </div>
+        <span class="eyebrow">انتهت الجلسة</span>
+        <h1 class="play-title" id="closed-title">انتهت الجولة</h1>
+        <p class="play-sub" id="closed-message">شكرًا لمشاركتك.</p>
+        <a class="btn btn-cyan btn-lg" id="closed-action" href="/play">العودة للانضمام</a>
+      </section>
+    </main>
+
+    <div id="conn-banner" class="conn-banner" role="status" hidden>
+      <span class="spinner"></span>
+      <span id="conn-banner-text">انقطع الاتصال... جارٍ إعادة المحاولة</span>
+    </div>
+
+    <noscript>
+      <div class="container" style="padding: 30px; text-align: center">
+        يحتاج هذا الموقع إلى تفعيل JavaScript للانضمام إلى اللعبة.
+      </div>
+    </noscript>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script type="module" src="/js/play.js"></script>
+  </body>
+</html>

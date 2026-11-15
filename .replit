@@ -1,0 +1,7 @@
+run = "npm start"
+entrypoint = "server.js"
+modules = ["nodejs-20"]
+hidden = [".config", "node_modules", "data"]
+
+[nix]
+channel = "stable-24_05"

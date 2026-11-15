@@ -1,0 +1,554 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#030d1b" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>لوحة المشرف | الأسرع</title>
+    <link rel="icon" href="/assets/logo.svg" type="image/svg+xml" />
+    <link rel="preload" href="/fonts/thmanyahsans-Black.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="stylesheet" href="/css/base.css" />
+    <link rel="stylesheet" href="/css/admin.css" />
+  </head>
+  <body class="admin-page">
+    <div class="site-backdrop" aria-hidden="true">
+      <span class="orb orb-cyan"></span>
+      <span class="orb orb-green"></span>
+      <span class="helix helix-left"></span>
+      <span class="helix helix-right"></span>
+      <span class="hex-ghost"><img src="/assets/hex-watermark.svg" alt="" /></span>
+    </div>
+
+    <header class="admin-top">
+      <div class="admin-top-inner container">
+        <a class="brand brand-sm" href="/" aria-label="الأسرع — الصفحة الرئيسية">
+          <img src="/assets/logo.svg" alt="" />
+          <span class="brand-copy">
+            <span class="brand-name">الأسرع</span>
+            <span class="brand-sub">لوحة المشرف</span>
+          </span>
+        </a>
+
+        <nav class="admin-tabs" aria-label="أقسام لوحة التحكم">
+          <button class="admin-tab-btn" type="button" data-tab="control" aria-pressed="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="3" y="4" width="18" height="12" rx="2" />
+              <path d="M8 20h8M12 16v4" />
+            </svg>
+            التحكم
+          </button>
+          <button class="admin-tab-btn" type="button" data-tab="questions" aria-pressed="false">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M5 4h14a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1Z" />
+              <path d="M8 9h8M8 13h8M8 17h5" />
+            </svg>
+            بنك الأسئلة
+            <span class="tab-count" id="bank-count-tab">٠</span>
+          </button>
+          <button class="admin-tab-btn" type="button" data-tab="history" aria-pressed="false">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="9" />
+              <path d="M12 7v5l3 2" />
+            </svg>
+            السجل
+          </button>
+        </nav>
+
+        <div class="admin-top-actions">
+          <span class="conn-pill" id="admin-conn">
+            <span class="online-dot" id="admin-conn-dot"></span>
+            <span id="admin-conn-label">متصل</span>
+          </span>
+          <a class="btn btn-outline btn-sm display-link" href="/display" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="2" y="4" width="20" height="13" rx="2" />
+              <path d="M8 21h8M12 17v4" />
+            </svg>
+            شاشة العرض
+          </a>
+          <button class="icon-btn" id="logout-btn" type="button" title="تسجيل الخروج" aria-label="تسجيل الخروج">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main class="admin-main container">
+      <div id="admin-loading" class="loading-screen">
+        <img class="loading-logo" src="/assets/logo.svg" alt="" style="width: 64px" />
+        <span class="spinner" style="border-color: rgba(73, 226, 255, 0.2); border-top-color: var(--cyan)"></span>
+        <span>جارٍ تحميل لوحة التحكم...</span>
+      </div>
+
+      <!-- ================================================================== control -->
+      <section id="tab-control" class="admin-tab-panel" hidden>
+        <!-- setup --------------------------------------------------------- -->
+        <div id="control-setup" class="control-view" hidden>
+          <div class="admin-page-head">
+            <div>
+              <span class="eyebrow">لوحة التحكم</span>
+              <h1 class="admin-title wordmark">جهّز الجولة</h1>
+              <p class="admin-sub">اختر عدد اللاعبين والأسئلة، ثم أنشئ غرفة الانتظار واعرض رمز QR على الشاشة.</p>
+            </div>
+            <div class="head-stats">
+              <div class="head-stat">
+                <strong class="num" id="setup-bank-total">٠</strong>
+                <span>سؤال في البنك</span>
+              </div>
+              <div class="head-stat">
+                <strong class="num" id="setup-selected-total">٠</strong>
+                <span>سؤال مختار</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="setup-grid">
+            <aside class="card card-pad setup-settings">
+              <div class="card-head">
+                <div>
+                  <h2 class="panel-title">إعدادات الغرفة</h2>
+                  <p class="panel-sub">يمكنك تغييرها قبل إنشاء الجولة فقط.</p>
+                </div>
+                <span class="badge badge-cyan"><span class="dot"></span> جديد</span>
+              </div>
+
+              <div class="field">
+                <span class="label">عدد اللاعبين</span>
+                <div class="segmented player-count-options" id="player-count-options" role="group" aria-label="عدد اللاعبين">
+                  <button type="button" data-count="2" aria-pressed="false">٢</button>
+                  <button type="button" data-count="3" aria-pressed="false">٣</button>
+                  <button type="button" data-count="4" aria-pressed="false">٤</button>
+                  <button type="button" data-count="5" aria-pressed="false">٥</button>
+                  <button type="button" data-count="6" aria-pressed="true">٦</button>
+                </div>
+                <span class="hint">الحد الأقصى للاعبين في الغرفة الواحدة.</span>
+              </div>
+
+              <div class="settings-divider"></div>
+
+              <label class="switch settings-switch">
+                <input type="checkbox" id="shuffle-questions" />
+                <span class="switch-track"></span>
+                <span>
+                  <strong>خلط ترتيب الأسئلة</strong>
+                  <small>سؤال كل لاعب يرى الأسئلة بترتيب مختلف.</small>
+                </span>
+              </label>
+              <label class="switch settings-switch">
+                <input type="checkbox" id="shuffle-options" checked />
+                <span class="switch-track"></span>
+                <span>
+                  <strong>خلط الخيارات</strong>
+                  <small>يتغيّر ترتيب الخيارات في كل جولة.</small>
+                </span>
+              </label>
+
+              <div class="settings-divider"></div>
+
+              <div class="setup-summary" id="setup-summary">
+                <div class="summary-row">
+                  <span>الأسئلة المختارة</span>
+                  <strong class="num" id="summary-questions">٠</strong>
+                </div>
+                <div class="summary-row">
+                  <span>المدة التقديرية</span>
+                  <strong id="summary-duration">—</strong>
+                </div>
+                <div class="summary-row">
+                  <span>أسرع إجابة صحيحة</span>
+                  <strong class="green">١٠٠٠ نقطة</strong>
+                </div>
+              </div>
+
+              <button class="btn btn-primary btn-lg btn-block create-game-btn" id="create-game-btn" type="button">
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 2 4.5 13.5H11l-1.6 8.5L20 10h-6.5L13 2Z" /></svg>
+                إنشاء غرفة اللعب
+              </button>
+              <p class="hint text-center">ينشئ رمز QR جديدًا وغرفة انتظار للاعبين.</p>
+            </aside>
+
+            <section class="card setup-picker">
+              <div class="picker-head">
+                <div>
+                  <h2 class="panel-title">اختر الأسئلة</h2>
+                  <p class="panel-sub">سيتم تثبيت نسخة من الأسئلة عند إنشاء الجولة.</p>
+                </div>
+                <span class="badge badge-green" id="picker-count-pill">٠ مختار</span>
+              </div>
+
+              <div class="picker-toolbar">
+                <div class="search-box">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+                    <circle cx="11" cy="11" r="7" />
+                    <path d="m20 20-3.2-3.2" />
+                  </svg>
+                  <input id="picker-search" class="input picker-search" type="search" placeholder="ابحث في الأسئلة أو التصنيفات..." autocomplete="off" />
+                </div>
+                <div class="picker-presets">
+                  <button class="btn btn-ghost btn-sm" type="button" id="pick-preset-10">أول ١٠</button>
+                  <button class="btn btn-ghost btn-sm" type="button" id="pick-all">الكل</button>
+                  <button class="btn btn-ghost btn-sm" type="button" id="pick-clear">مسح</button>
+                </div>
+              </div>
+
+              <div class="picker-list" id="picker-list" role="group" aria-label="قائمة الأسئلة"></div>
+              <div class="picker-foot">
+                <span id="picker-foot-note">اختر سؤالًا واحدًا على الأقل للبدء.</span>
+                <button class="link" type="button" id="picker-manage">إدارة بنك الأسئلة</button>
+              </div>
+            </section>
+          </div>
+
+          <div class="tip-bar">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="9" />
+              <path d="M12 11v6M12 7.5h.01" />
+            </svg>
+            <span>بعد إنشاء الغرفة اعرض شاشة العرض على البروجكتر، وسيجد اللاعبون رمز QR ورمزًا مكوّنًا من ٦ أرقام للانضمام.</span>
+          </div>
+        </div>
+
+        <!-- lobby --------------------------------------------------------- -->
+        <div id="control-lobby" class="control-view" hidden>
+          <div class="admin-page-head">
+            <div>
+              <span class="eyebrow">غرفة الانتظار</span>
+              <h1 class="admin-title wordmark">اللاعبون ينضمون</h1>
+              <p class="admin-sub">اعرض رمز QR على شاشة العرض. يمكنك بدء الجولة بعد انضمام لاعبين اثنين على الأقل.</p>
+            </div>
+            <div class="lobby-code-chip code-chip" aria-label="رمز اللعبة">
+              <span class="text-xs muted">رمز اللعبة</span>
+              <strong class="lobby-code-value" id="lobby-code" dir="ltr">—</strong>
+            </div>
+          </div>
+
+          <div class="lobby-grid">
+            <section class="card lobby-join-card">
+              <div class="lobby-join-head">
+                <h2 class="panel-title">انضم من جوالك</h2>
+                <span class="badge badge-green"><span class="dot"></span> الغرفة مفتوحة</span>
+              </div>
+              <div class="qr-frame">
+                <img id="lobby-qr" alt="رمز QR للانضمام إلى اللعبة" />
+                <div class="qr-loading" id="qr-loading"><span class="spinner"></span></div>
+                <div class="qr-fallback" id="qr-fallback" hidden>
+                  <img src="/assets/logo.svg" alt="" />
+                  <span>تعذر تحميل رمز QR</span>
+                </div>
+              </div>
+              <p class="lobby-instructions">وجّه كاميرا الجوال نحو الرمز، أو أدخل الرمز المكوّن من ٦ أرقام.</p>
+              <div class="join-url-row">
+                <code id="join-url" dir="ltr">—</code>
+                <button class="icon-btn" type="button" id="copy-join-url" title="نسخ الرابط" aria-label="نسخ رابط الانضمام">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <rect x="9" y="9" width="12" height="12" rx="2" />
+                    <path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1" />
+                  </svg>
+                </button>
+              </div>
+              <p class="join-source-note" id="join-source-note" hidden></p>
+              <a class="btn btn-outline btn-block mt-2" href="/display" target="_blank" rel="noopener">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <rect x="2" y="4" width="20" height="13" rx="2" />
+                  <path d="M8 21h8M12 17v4" />
+                </svg>
+                افتح شاشة العرض على البروجكتر
+              </a>
+            </section>
+
+            <section class="card lobby-players-card">
+              <div class="lobby-players-head">
+                <div>
+                  <h2 class="panel-title">اللاعبون</h2>
+                  <p class="panel-sub" id="lobby-players-count">٠ من ٦</p>
+                </div>
+                <div class="capacity-dots" id="lobby-capacity" aria-hidden="true"></div>
+              </div>
+              <div class="lobby-player-list" id="lobby-player-list"></div>
+              <div class="lobby-actions">
+                <button class="btn btn-primary btn-lg" id="start-game-btn" type="button">
+                  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13a1 1 0 0 0 1.5.87l11-6.5a1 1 0 0 0 0-1.74l-11-6.5A1 1 0 0 0 8 5.5Z" /></svg>
+                  ابدأ الجولة
+                </button>
+                <button class="btn btn-ghost" id="cancel-game-btn" type="button">إلغاء الغرفة</button>
+              </div>
+              <p class="hint lobby-start-hint" id="lobby-start-hint">بانتظار انضمام لاعبين...</p>
+            </section>
+          </div>
+        </div>
+
+        <!-- live ---------------------------------------------------------- -->
+        <div id="control-live" class="control-view" hidden>
+          <div class="live-bar card">
+            <div class="live-bar-context">
+              <span class="eyebrow live-eyebrow" id="live-phase-label">السؤال الأول</span>
+              <div class="live-progress">
+                <strong class="num" id="live-progress-text">١ من ١٠</strong>
+                <span class="live-progress-track"><span id="live-progress-fill"></span></span>
+              </div>
+              <p class="live-status-text" id="live-status-text">—</p>
+            </div>
+
+            <div class="live-timer-wrap">
+              <div class="timer" id="admin-timer" style="--timer-size: 98px" aria-label="الوقت المتبقي">
+                <svg viewBox="0 0 120 120" aria-hidden="true">
+                  <circle class="timer-track" cx="60" cy="60" r="52"></circle>
+                  <circle class="timer-progress" cx="60" cy="60" r="52"></circle>
+                </svg>
+                <span class="timer-inner">
+                  <span class="timer-value">—</span>
+                  <span class="timer-unit">ثانية</span>
+                </span>
+              </div>
+            </div>
+
+            <div class="live-actions" id="live-actions">
+              <button class="btn btn-primary" id="btn-start-question" type="button" hidden>
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13a1 1 0 0 0 1.5.87l11-6.5a1 1 0 0 0 0-1.74l-11-6.5A1 1 0 0 0 8 5.5Z" /></svg>
+                ابدأ السؤال الأول
+              </button>
+              <button class="btn btn-orange" id="btn-pause" type="button" hidden>
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="4" width="4" height="16" rx="1" /><rect x="14" y="4" width="4" height="16" rx="1" /></svg>
+                إيقاف المؤقت
+              </button>
+              <button class="btn btn-primary" id="btn-reveal" type="button" hidden>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z" /><circle cx="12" cy="12" r="3" /></svg>
+                اعرض النتيجة
+              </button>
+              <button class="btn btn-purple" id="btn-leaderboard" type="button" hidden>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0V4Z" /><path d="M7 6H4v2a3 3 0 0 0 3 3M17 6h3v2a3 3 0 0 1-3 3" /></svg>
+                اعرض المتصدرين
+              </button>
+              <button class="btn btn-cyan" id="btn-next" type="button" hidden>
+                السؤال التالي
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 18l-6-6 6-6" /></svg>
+              </button>
+              <button class="btn btn-ghost" id="btn-finish" type="button" hidden>إنهاء الجولة</button>
+            </div>
+          </div>
+
+          <div class="live-grid">
+            <section class="card live-question-card" id="live-question-card">
+              <div id="live-question-content"></div>
+            </section>
+
+            <aside class="card live-side">
+              <div class="live-side-head">
+                <div>
+                  <h2 class="panel-title" id="live-side-title">الإجابات المباشرة</h2>
+                  <p class="panel-sub" id="live-side-sub">—</p>
+                </div>
+                <span class="badge badge-cyan" id="live-side-badge">٠ من ٠</span>
+              </div>
+              <div class="live-side-body" id="live-side-body"></div>
+            </aside>
+          </div>
+
+          <div class="live-footer">
+            <span class="live-footer-item">
+              <span class="online-dot"></span>
+              <span id="live-online-count">٠ لاعبين متصلين</span>
+            </span>
+            <span class="live-footer-item">شاشة العرض لا تُظهر صحة الإجابات قبل ضغط «اعرض النتيجة».</span>
+          </div>
+        </div>
+
+        <!-- podium -------------------------------------------------------- -->
+        <div id="control-podium" class="control-view" hidden>
+          <div class="podium-grid">
+            <section class="card podium-hero">
+              <div class="podium-crown" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="m3 7 4.5 4L12 4l4.5 7L21 7l-2 12H5L3 7Z" /><path d="M5 19h14v2H5z" /></svg>
+              </div>
+              <span class="eyebrow">انتهت الجولة</span>
+              <h1 class="podium-winner wordmark" id="podium-winner-name">—</h1>
+              <p class="podium-score" id="podium-winner-score">—</p>
+              <p class="podium-note">الفائز بالجولة بحسب مجموع النقاط، ثم الإجابات الصحيحة، ثم سرعة الإجابة.</p>
+              <div class="podium-actions">
+                <button class="btn btn-primary btn-lg" id="new-game-btn" type="button">جولة جديدة</button>
+                <button class="btn btn-outline" id="podium-history-btn" type="button">عرض السجل</button>
+              </div>
+            </section>
+
+            <section class="card final-table-card">
+              <div class="card-head">
+                <div>
+                  <h2 class="panel-title">الترتيب النهائي</h2>
+                  <p class="panel-sub" id="podium-table-sub">—</p>
+                </div>
+                <span class="badge badge-muted" id="podium-game-code" dir="ltr">—</span>
+              </div>
+              <div class="final-table" id="podium-table"></div>
+            </section>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================================================================== questions -->
+      <section id="tab-questions" class="admin-tab-panel" hidden>
+        <div class="admin-page-head">
+          <div>
+            <span class="eyebrow">بنك الأسئلة</span>
+            <h1 class="admin-title wordmark">إدارة الأسئلة</h1>
+            <p class="admin-sub">أضف وعدّل ورتّب أسئلة المادة. التعديلات تنطبق على الجولات الجديدة فقط.</p>
+          </div>
+          <button class="btn btn-primary" id="add-question-btn" type="button">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14" /></svg>
+            سؤال جديد
+          </button>
+        </div>
+
+        <div class="card bank-card">
+          <div class="bank-toolbar">
+            <div class="search-box">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+                <circle cx="11" cy="11" r="7" />
+                <path d="m20 20-3.2-3.2" />
+              </svg>
+              <input id="bank-search" class="input picker-search" type="search" placeholder="ابحث بالنص أو التصنيف أو الخيار..." autocomplete="off" />
+            </div>
+            <span class="badge badge-muted" id="bank-count">٠ سؤال</span>
+          </div>
+          <div class="bank-list" id="bank-list"></div>
+        </div>
+        <div class="tip-bar">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="9" />
+            <path d="M12 11v6M12 7.5h.01" />
+          </svg>
+          <span>ترتيب البنك هو الترتيب الافتراضي للأسئلة. يمكنك أيضًا خلط الأسئلة عند إنشاء الغرفة.</span>
+        </div>
+      </section>
+
+      <!-- ================================================================== history -->
+      <section id="tab-history" class="admin-tab-panel" hidden>
+        <div class="admin-page-head">
+          <div>
+            <span class="eyebrow">سجل الجولات</span>
+            <h1 class="admin-title wordmark">الجولات السابقة</h1>
+            <p class="admin-sub">نتائج الجولات المنتهية محفوظة على الخادم. احذف ما لا تحتاج إليه.</p>
+          </div>
+          <button class="btn btn-outline" id="refresh-history-btn" type="button">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 1 1-2.64-6.36" /><path d="M21 3v6h-6" /></svg>
+            تحديث
+          </button>
+        </div>
+        <div class="history-list" id="history-list"></div>
+      </section>
+    </main>
+
+    <footer class="admin-footer">
+      <span>الأسرع | العلوم الحيوية الطبية</span>
+      <span class="footer-dot">•</span>
+      <span>لوحة إشراف محمية</span>
+    </footer>
+
+    <!-- ================================================================== question modal -->
+    <div class="modal" id="question-modal" hidden>
+      <div class="modal-card modal-wide" role="dialog" aria-modal="true" aria-labelledby="question-modal-title">
+        <div class="modal-head">
+          <div>
+            <h3 id="question-modal-title">سؤال جديد</h3>
+            <p>ستظهر الإجابة الصحيحة للمشرف فقط قبل عرض النتيجة.</p>
+          </div>
+          <button class="icon-btn" type="button" id="close-question-modal" aria-label="إغلاق">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18" /></svg>
+          </button>
+        </div>
+
+        <form id="question-form" class="stack" novalidate>
+          <div class="field">
+            <label for="q-text">نص السؤال</label>
+            <textarea id="q-text" class="textarea" maxlength="300" placeholder="اكتب نص السؤال هنا..." required></textarea>
+          </div>
+
+          <div class="field">
+            <span class="label">الخيارات <span class="label-hint">حدّد الإجابة الصحيحة</span></span>
+            <div class="option-inputs" id="option-inputs">
+              <div class="option-input-row" data-index="0">
+                <label class="option-radio">
+                  <input type="radio" name="q-correct" value="0" />
+                  <span class="radio-dot"></span>
+                  <span class="sr-only">الخيار أ صحيح</span>
+                </label>
+                <span class="option-letter" data-letter="0">أ</span>
+                <input type="text" class="input option-text" id="q-option-0" maxlength="100" placeholder="الخيار أ" autocomplete="off" />
+                <span class="option-correct-flag">الصحيحة</span>
+              </div>
+              <div class="option-input-row" data-index="1">
+                <label class="option-radio">
+                  <input type="radio" name="q-correct" value="1" />
+                  <span class="radio-dot"></span>
+                  <span class="sr-only">الخيار ب صحيح</span>
+                </label>
+                <span class="option-letter" data-letter="1">ب</span>
+                <input type="text" class="input option-text" id="q-option-1" maxlength="100" placeholder="الخيار ب" autocomplete="off" />
+                <span class="option-correct-flag">الصحيحة</span>
+              </div>
+              <div class="option-input-row" data-index="2">
+                <label class="option-radio">
+                  <input type="radio" name="q-correct" value="2" />
+                  <span class="radio-dot"></span>
+                  <span class="sr-only">الخيار ج صحيح</span>
+                </label>
+                <span class="option-letter" data-letter="2">ج</span>
+                <input type="text" class="input option-text" id="q-option-2" maxlength="100" placeholder="الخيار ج" autocomplete="off" />
+                <span class="option-correct-flag">الصحيحة</span>
+              </div>
+              <div class="option-input-row" data-index="3">
+                <label class="option-radio">
+                  <input type="radio" name="q-correct" value="3" />
+                  <span class="radio-dot"></span>
+                  <span class="sr-only">الخيار د صحيح</span>
+                </label>
+                <span class="option-letter" data-letter="3">د</span>
+                <input type="text" class="input option-text" id="q-option-3" maxlength="100" placeholder="الخيار د" autocomplete="off" />
+                <span class="option-correct-flag">الصحيحة</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-grid">
+            <div class="field">
+              <label for="q-category">التصنيف</label>
+              <input id="q-category" class="input" type="text" maxlength="40" placeholder="مثال: الخلية" autocomplete="off" />
+            </div>
+            <div class="field">
+              <span class="label">مدة السؤال</span>
+              <div class="segmented" id="q-timer-options" role="group" aria-label="مدة السؤال">
+                <button type="button" data-timer="30" aria-pressed="true">٣٠ ثانية</button>
+                <button type="button" data-timer="60" aria-pressed="false">٦٠ ثانية</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="q-explanation">شرح الإجابة <span class="label-hint">اختياري</span></label>
+            <textarea id="q-explanation" class="textarea explanation-input" maxlength="500" placeholder="يظهر على شاشة العرض بعد كشف النتيجة..."></textarea>
+          </div>
+
+          <p class="error-text" id="question-form-error" role="alert" hidden></p>
+
+          <div class="modal-actions">
+            <button class="btn btn-primary" id="save-question-btn" type="submit">حفظ السؤال</button>
+            <button class="btn btn-ghost" id="cancel-question-btn" type="button">إلغاء</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div id="confirm-root"></div>
+
+    <noscript>
+      <div class="container" style="padding: 30px; text-align: center">
+        يحتاج هذا الموقع إلى تفعيل JavaScript لإدارة الجولة.
+      </div>
+    </noscript>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script type="module" src="/js/admin.js"></script>
+  </body>
+</html>

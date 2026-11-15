@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#030d1b" />
+    <meta name="description" content="الأسرع — لعبة تفاعلية لمادة العلوم الحيوية الطبية. انضم بجوالك، أجب بسرعة، واكسب أعلى النقاط." />
+    <title>الأسرع | العلوم الحيوية الطبية</title>
+    <link rel="icon" href="/assets/logo.svg" type="image/svg+xml" />
+    <link rel="preload" href="/fonts/thmanyahsans-Black.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="stylesheet" href="/css/base.css" />
+    <link rel="stylesheet" href="/css/landing.css" />
+  </head>
+  <body class="landing">
+    <div class="site-backdrop" aria-hidden="true">
+      <span class="orb orb-cyan"></span>
+      <span class="orb orb-green"></span>
+      <span class="helix helix-left"></span>
+      <span class="helix helix-right"></span>
+      <span class="hex-ghost"><img src="/assets/hex-watermark.svg" alt="" /></span>
+    </div>
+
+    <header class="landing-header container">
+      <a class="brand" href="/" aria-label="الأسرع — الصفحة الرئيسية">
+        <img src="/assets/logo.svg" alt="" />
+        <span class="brand-copy">
+          <span class="brand-name">الأسرع</span>
+          <span class="brand-sub">العلوم الحيوية الطبية</span>
+        </span>
+      </a>
+      <a class="btn btn-ghost btn-sm" href="/login?next=/admin">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="4" y="10" width="16" height="11" rx="2" />
+          <path d="M8 10V7a4 4 0 0 1 8 0v3" />
+        </svg>
+        دخول المشرف
+      </a>
+    </header>
+
+    <main class="hero container">
+      <section class="hero-copy fade-in">
+        <div class="hero-logo">
+          <img src="/assets/logo.svg" alt="" />
+        </div>
+        <h1 class="hero-word wordmark">الأسرع</h1>
+        <p class="hero-tagline">تحدّي العلوم الحيوية الطبية</p>
+        <p class="hero-desc">
+          جولة معرفية سريعة بين <span class="green">٢ إلى ٦ لاعبين</span>. كل لاعب يجيب من جواله،
+          والأسرع في الإجابة الصحيحة يحصد أكبر قدر من النقاط.
+        </p>
+        <div class="feature-pills">
+          <span class="feature-pill pill-green">الأسرع يكسب أكثر</span>
+          <span class="feature-pill pill-orange">الدخول بالجوال QR</span>
+          <span class="feature-pill pill-pink">من ٢ إلى ٦ لاعبين</span>
+        </div>
+        <div class="hero-note">
+          <span class="pulse-dot"></span>
+          <span>جاهزة للعب على أي جوال — دون تثبيت تطبيق</span>
+        </div>
+      </section>
+
+      <section class="join-card card fade-in-slow" aria-labelledby="join-title">
+        <div class="join-card-glow" aria-hidden="true"></div>
+        <div class="between">
+          <span class="eyebrow">دخول اللاعبين</span>
+          <span class="badge badge-green"><span class="dot"></span> مباشر</span>
+        </div>
+        <h2 id="join-title" class="join-title">ادخل اللعبة</h2>
+        <p class="join-sub">امسح رمز QR من شاشة العرض، أو أدخل رمز اللعبة الذي يظهر هناك.</p>
+
+        <form id="join-form" class="join-form" novalidate>
+          <div class="field">
+            <label for="join-code">رمز اللعبة</label>
+            <input
+              id="join-code"
+              class="input code-input"
+              type="text"
+              inputmode="numeric"
+              autocomplete="one-time-code"
+              maxlength="6"
+              placeholder="000000"
+              aria-describedby="code-help"
+              required
+            />
+            <span id="code-help" class="hint">ستة أرقام تظهر أسفل رمز QR على شاشة العرض.</span>
+          </div>
+          <button id="join-btn" class="btn btn-primary btn-lg btn-block" type="submit">
+            ادخل اللعبة
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M19 12H5M11 18l-6-6 6-6" />
+            </svg>
+          </button>
+        </form>
+
+        <div class="join-sep"><span>أو</span></div>
+
+        <div class="scan-hint">
+          <span class="scan-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="3" y="3" width="7" height="7" rx="1" />
+              <rect x="14" y="3" width="7" height="7" rx="1" />
+              <rect x="3" y="14" width="7" height="7" rx="1" />
+              <path d="M14 14h3v3h-3zM20 14v1M14 20h1M18 18h3v3h-3z" />
+            </svg>
+          </span>
+          <div>
+            <strong>افتح كاميرا الجوال</strong>
+            <small>وجّهها نحو رمز QR الظاهر على شاشة العرض</small>
+          </div>
+        </div>
+
+        <p class="join-admin">
+          مشرف المادة؟
+          <a href="/login?next=/admin">الدخول إلى لوحة التحكم</a>
+        </p>
+      </section>
+    </main>
+
+    <footer class="landing-footer container">
+      <span>الأسرع | العلوم الحيوية الطبية</span>
+      <span class="footer-dot">•</span>
+      <span>لعبة صفّية تفاعلية</span>
+    </footer>
+
+    <script type="module" src="/js/landing.js"></script>
+  </body>
+</html>

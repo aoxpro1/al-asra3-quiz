@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 132" fill="none">
+  <defs>
+    <linearGradient id="hexFill" x1="24" y1="10" x2="102" y2="124" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#5BE5FF"/>
+      <stop offset=".48" stop-color="#21A6FF"/>
+      <stop offset="1" stop-color="#166BFF"/>
+    </linearGradient>
+    <linearGradient id="hexShine" x1="30" y1="8" x2="78" y2="80" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#fff" stop-opacity=".38"/>
+      <stop offset="1" stop-color="#fff" stop-opacity="0"/>
+    </linearGradient>
+    <filter id="hexGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <g filter="url(#hexGlow)">
+    <path d="M60 3.5 113 33.2v65.6L60 128.5 7 98.8V33.2L60 3.5Z" fill="url(#hexFill)" stroke="#C9F4FF" stroke-width="3"/>
+    <path d="M60 13 104 37.8v4.4L60 20.6 16 42.2v-4.4L60 13Z" fill="url(#hexShine)"/>
+    <path d="M64 25 35 72.5h22.5L51 106l33-52H61.5L64 25Z" fill="#fff"/>
+    <circle cx="34.5" cy="42.5" r="6.2" fill="#A6FF3D"/>
+    <circle cx="84.5" cy="94" r="6.2" fill="#A6FF3D"/>
+  </g>
+</svg>

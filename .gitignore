@@ -1,0 +1,14 @@
+node_modules/
+data/db.json
+data/db.json.tmp
+data/.session-secret
+data/*.log
+.env
+.DS_Store
+Thumbs.db
+_pdf_preview/
+_fonts_extract/
+_qa/
+*.zip
+*.pdf
+test/.tmp/

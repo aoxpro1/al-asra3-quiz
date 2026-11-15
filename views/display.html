@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#030d1b" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>شاشة العرض | الأسرع</title>
+    <link rel="icon" href="/assets/logo.svg" type="image/svg+xml" />
+    <link rel="preload" href="/fonts/thmanyahsans-Black.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="stylesheet" href="/css/base.css" />
+    <link rel="stylesheet" href="/css/display.css" />
+  </head>
+  <body class="display-page">
+    <div class="site-backdrop display-backdrop" aria-hidden="true">
+      <span class="orb orb-cyan"></span>
+      <span class="orb orb-green"></span>
+      <span class="helix helix-left"></span>
+      <span class="helix helix-right"></span>
+      <span class="hex-ghost"><img src="/assets/hex-watermark.svg" alt="" /></span>
+      <span class="display-grid"></span>
+    </div>
+
+    <div class="screen-shell">
+      <header class="screen-top">
+        <div class="brand brand-sm screen-brand">
+          <img src="/assets/logo.svg" alt="" />
+          <span class="brand-copy">
+            <span class="brand-name">الأسرع</span>
+            <span class="brand-sub">العلوم الحيوية الطبية</span>
+          </span>
+        </div>
+
+        <div class="screen-head-meta">
+          <span class="screen-phase" id="screen-phase">شاشة العرض</span>
+          <span class="screen-progress" id="screen-progress" hidden></span>
+        </div>
+
+        <div class="screen-tools">
+          <span class="conn-pill" id="display-conn">
+            <span class="online-dot" id="display-conn-dot"></span>
+            <span id="display-conn-label">متصل</span>
+          </span>
+          <button class="icon-btn screen-fullscreen" id="fullscreen-btn" type="button" title="ملء الشاشة" aria-label="ملء الشاشة">
+            <svg class="fs-enter" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M8 3H5a2 2 0 0 0-2 2v3M16 3h3a2 2 0 0 1 2 2v3M8 21H5a2 2 0 0 1-2-2v-3M16 21h3a2 2 0 0 0 2-2v-3" />
+            </svg>
+            <svg class="fs-exit" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" hidden>
+              <path d="M3 8h3a2 2 0 0 0 2-2V3M21 8h-3a2 2 0 0 1-2-2V3M3 16h3a2 2 0 0 1 2 2v3M21 16h-3a2 2 0 0 0-2 2v3" />
+            </svg>
+          </button>
+        </div>
+      </header>
+
+      <main class="screen-main">
+        <section id="view-loading" class="screen-view loading-screen display-loading" aria-live="polite">
+          <img class="loading-logo" src="/assets/logo.svg" alt="" style="width: 90px" />
+          <span class="spinner" style="border-color: rgba(73, 226, 255, 0.2); border-top-color: var(--cyan)"></span>
+          <span>جارٍ تجهيز شاشة العرض...</span>
+        </section>
+
+        <!-- ============================================================ welcome -->
+        <section id="view-welcome" class="screen-view welcome-view" hidden>
+          <div class="welcome-glow" aria-hidden="true"></div>
+          <div class="welcome-logo">
+            <img src="/assets/logo.svg" alt="" />
+          </div>
+          <h1 class="screen-word wordmark">الأسرع</h1>
+          <p class="screen-tagline">تحدّي العلوم الحيوية الطبية</p>
+          <p class="welcome-desc">لعبة صفّية تفاعلية — يجيب كل لاعب من جواله، والأسرع في الإجابة الصحيحة يكسب أكثر.</p>
+          <div class="welcome-pills">
+            <span class="feature-pill pill-pink">الأسرع يكسب أكثر</span>
+            <span class="feature-pill pill-orange">الدخول بالجوال QR</span>
+            <span class="feature-pill pill-green">من ٢ إلى ٦ لاعبين</span>
+          </div>
+          <div class="welcome-wait">
+            <span class="pulse-dot"></span>
+            <span>بانتظار إنشاء الجولة من لوحة المشرف</span>
+          </div>
+          <p class="welcome-hint">افتح لوحة المشرف على جهاز آخر، ثم أنشئ غرفة اللعب لعرض رمز QR هنا.</p>
+        </section>
+
+        <!-- ============================================================ lobby -->
+        <section id="view-lobby" class="screen-view lobby-view" hidden>
+          <div class="lobby-copy">
+            <span class="eyebrow">الغرفة مفتوحة</span>
+            <h1 class="screen-title">انضم إلى التحدّي</h1>
+            <p class="screen-lead">امسح رمز QR بكاميرا جوالك، أو أدخل رمز اللعبة في صفحة الانضمام.</p>
+
+            <div class="lobby-code-box">
+              <span class="lobby-code-label">رمز اللعبة</span>
+              <strong class="lobby-code-value" id="lobby-code" dir="ltr">—</strong>
+            </div>
+
+            <div class="lobby-url-row">
+              <span class="lobby-url" id="lobby-url" dir="ltr">—</span>
+            </div>
+
+            <ol class="join-steps">
+              <li><span class="step-num">١</span><span>افتح كاميرا الجوال</span></li>
+              <li><span class="step-num">٢</span><span>امسح رمز QR الظاهر</span></li>
+              <li><span class="step-num">٣</span><span>اكتب اسمك وادخل اللعبة</span></li>
+            </ol>
+
+            <p class="lobby-local-note" id="lobby-local-note" hidden></p>
+          </div>
+
+          <div class="lobby-side">
+            <div class="lobby-qr-card">
+              <div class="lobby-qr" id="lobby-qr-frame">
+                <img id="lobby-qr" alt="رمز QR للانضمام إلى اللعبة" />
+                <div class="qr-loading" id="lobby-qr-loading"><span class="spinner"></span></div>
+                <div class="qr-fallback" id="lobby-qr-fallback" hidden>
+                  <img src="/assets/logo.svg" alt="" />
+                  <span>تعذر تحميل الرمز</span>
+                </div>
+              </div>
+              <p class="lobby-qr-caption">وجّه الكاميرا نحو الرمز للانضمام مباشرة</p>
+            </div>
+
+            <div class="lobby-roster">
+              <div class="roster-head">
+                <div>
+                  <h2>اللاعبون</h2>
+                  <p id="lobby-count">٠ من ٦</p>
+                </div>
+                <div class="capacity-dots" id="lobby-capacity" aria-hidden="true"></div>
+              </div>
+              <div class="roster-grid" id="lobby-players"></div>
+              <p class="roster-note" id="lobby-roster-note">بانتظار انضمام اللاعبين...</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============================================================ ready -->
+        <section id="view-ready" class="screen-view ready-view" hidden>
+          <div class="ready-glow" aria-hidden="true"></div>
+          <div class="ready-logo">
+            <img src="/assets/logo.svg" alt="" />
+          </div>
+          <span class="eyebrow">الجولة تبدأ الآن</span>
+          <h1 class="ready-word wordmark">استعد!</h1>
+          <p class="screen-lead">السؤال الأول سيظهر بعد لحظات. جهّز إبهامك.</p>
+          <div class="ready-dots" aria-hidden="true"><span></span><span></span><span></span></div>
+          <div class="ready-roster" id="ready-players"></div>
+          <p class="ready-hint">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 2 4.5 13.5H11l-1.6 8.5L20 10h-6.5L13 2Z" /></svg>
+            الأسرع في الإجابة الصحيحة يكسب أكثر
+          </p>
+        </section>
+
+        <!-- ============================================================ question / revealed -->
+        <section id="view-stage" class="screen-view stage-view" hidden>
+          <div class="stage-grid">
+            <div class="stage-main">
+              <div class="stage-qhead">
+                <div class="stage-qhead-right">
+                  <span class="badge badge-cyan stage-category" id="stage-category">عام</span>
+                  <span class="stage-qnum" id="stage-qnum">السؤال ١</span>
+                </div>
+                <div class="timer stage-timer" id="display-timer" style="--timer-size: 126px" aria-label="الوقت المتبقي">
+                  <svg viewBox="0 0 120 120" aria-hidden="true">
+                    <circle class="timer-track" cx="60" cy="60" r="52"></circle>
+                    <circle class="timer-progress" cx="60" cy="60" r="52"></circle>
+                  </svg>
+                  <span class="timer-inner">
+                    <span class="timer-value">٣٠</span>
+                    <span class="timer-unit">ثانية</span>
+                  </span>
+                </div>
+                <span class="badge badge-orange stage-result-badge" id="stage-result-badge" hidden>النتيجة</span>
+              </div>
+
+              <h1 class="stage-question" id="stage-question">—</h1>
+              <p class="stage-status" id="stage-status">اختر الإجابة الأسرع</p>
+
+              <div class="answer-grid stage-answers" id="stage-options" role="group" aria-label="خيارات الإجابة"></div>
+
+              <div class="stage-reveal" id="stage-reveal" hidden>
+                <div class="reveal-answer">
+                  <span class="reveal-letter" id="reveal-letter">ج</span>
+                  <div>
+                    <span class="reveal-label">الإجابة الصحيحة</span>
+                    <strong id="reveal-text">—</strong>
+                  </div>
+                </div>
+                <p class="reveal-explanation" id="reveal-explanation" hidden></p>
+              </div>
+            </div>
+
+            <aside class="stage-side">
+              <div class="stage-side-head">
+                <div>
+                  <h2 id="stage-side-title">من أجاب؟</h2>
+                  <p id="stage-side-sub">—</p>
+                </div>
+                <span class="badge badge-green" id="stage-side-badge">٠ من ٠</span>
+              </div>
+              <div class="stage-side-body" id="stage-side-body"></div>
+              <div class="stage-side-board" id="stage-side-board" hidden>
+                <div class="side-board-title">المتصدرون <span id="side-board-sub"></span></div>
+                <div id="side-board-list"></div>
+              </div>
+            </aside>
+          </div>
+        </section>
+
+        <!-- ============================================================ leaderboard -->
+        <section id="view-leaderboard" class="screen-view leaderboard-view" hidden>
+          <div class="leaderboard-head">
+            <span class="eyebrow">الترتيب العام</span>
+            <h1 class="screen-title">المتصدرون</h1>
+            <p class="screen-lead" id="leaderboard-sub">بعد السؤال الأول</p>
+          </div>
+          <div class="screen-podium" id="screen-podium"></div>
+          <div class="leaderboard-rest" id="leaderboard-rest"></div>
+        </section>
+
+        <!-- ============================================================ podium -->
+        <section id="view-podium" class="screen-view podium-view" hidden>
+          <div class="podium-winner">
+            <div class="podium-crown" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="m3 7 4.5 4L12 4l4.5 7L21 7l-2 12H5L3 7Z" /><path d="M5 19h14v2H5z" /></svg>
+            </div>
+            <span class="eyebrow">الفائز بالجولة</span>
+            <h1 class="podium-name wordmark" id="podium-name">—</h1>
+            <p class="podium-score" id="podium-score">—</p>
+            <p class="podium-stats" id="podium-stats">—</p>
+            <div class="podium-cup" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0V4Z" />
+                <path d="M7 6H4v2a3 3 0 0 0 3 3M17 6h3v2a3 3 0 0 1-3 3" />
+              </svg>
+            </div>
+            <p class="podium-thanks">شكرًا لمشاركة الجميع في تحدّي الأسرع | العلوم الحيوية الطبية</p>
+          </div>
+          <div class="podium-final">
+            <div class="podium-final-head">
+              <h2>الترتيب النهائي</h2>
+              <span class="badge badge-muted" id="podium-code" dir="ltr">—</span>
+            </div>
+            <div class="podium-table" id="podium-table"></div>
+          </div>
+        </section>
+      </main>
+
+      <footer class="screen-footer">
+        <span>الأسرع | العلوم الحيوية الطبية</span>
+        <span class="footer-dot">•</span>
+        <span id="footer-meta">لعبة صفّية تفاعلية</span>
+      </footer>
+    </div>
+
+    <div id="display-disconnected" class="display-disconnected" role="status" hidden>
+      <span class="spinner"></span>
+      <span>انقطع الاتصال... جارٍ إعادة المحاولة</span>
+    </div>
+
+    <noscript>
+      <div class="container" style="padding: 30px; text-align: center">
+        يحتاج هذا الموقع إلى تفعيل JavaScript لعرض شاشة اللعبة.
+      </div>
+    </noscript>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script type="module" src="/js/display.js"></script>
+  </body>
+</html>
