@@ -11,4 +11,5 @@ _fonts_extract/
 _qa/
 *.zip
 *.pdf
+cloudflared.exe
 test/.tmp/
