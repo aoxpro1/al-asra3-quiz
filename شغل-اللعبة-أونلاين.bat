@@ -8,22 +8,17 @@ echo        الأسرع ^| تشغيل اللعبة أونلاين عبر Cloudf
 echo ========================================================
 echo.
 
-:: 1. تشغيل سيرفر اللعبة في نافذة منفصلة
 echo [1/2] جاري تشغيل سيرفر اللعبة...
-start "سيرفر اللعبة (Node.js)" cmd /c "cd /d "%~dp0" && node server.js"
+start "Al-Asra3 Server" node server.js
 
-:: 2. الانتظار حتى يتأكد أن السيرفر بدأ العمل
-echo الانتظار 3 ثوانٍ حتى يكتمل إقلاع السيرفر...
-timeout /t 3 /nobreak >nul
+timeout /t 2 /nobreak >nul
 
-:: 3. تشغيل نفق Cloudflare برابط IPv4 المباشر لمنع خطأ [::1]
 echo [2/2] جاري فتح نفق Cloudflare الآمن (HTTPS)...
 echo.
 echo ========================================================
 echo  ابحث في الأسطر القادمة عن الرابط الذي ينتهي بـ:
 echo  .trycloudflare.com
-echo  (مثال: https://xxxx-xxxx.trycloudflare.com)
 echo ========================================================
 echo.
 
-.\cloudflared.exe tunnel --url http://127.0.0.1:3000
+cloudflared.exe tunnel --url http://127.0.0.1:3000
